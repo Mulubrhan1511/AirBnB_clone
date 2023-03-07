@@ -1,50 +1,55 @@
-#!/usr/bin/python3
+#!/usr/bin/pyhon3
 """
-Class BaseModel
+Parent class that will inherit
 """
-
-from datetime import datetime
 import uuid
-import models
-# dtm = date format
-dtm = "%Y-%m-%dT%H:%M:%S.%f"
+from datetime import datetime
+#from models import storage
 
 
 class BaseModel:
-    """Base Model"""
-
+    """Defines all common attributes/methods
+    """
     def __init__(self, *args, **kwargs):
-        """Initialize a BaseModel"""
-        if kwargs:
-            for key, val in kwargs.items():
-                if key != '__class__':
-                    setattr(self, key, val)
-            
-                self.created_at = datetime.strptime(kwargs["created_at"], dtm)
-            if hasattr(self, 'updated_at') and type(self.updated_at) is str:
-                self.updated_at = datetime.strptime(
-                    kwargs["updated_at"], dtm)
-
-        else:
+        """initializes all attributes
+        """
+        if not kwargs:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = self.created_at
-            models.storage.new(self)
+            #storage.new(self)
+        else:
+            f = "%Y-%m-%dT%H:%M:%S.%f"
+            for key, value in kwargs.items():
+                if key == 'created_at' or key == 'updated_at':
+                    value = datetime.strptime(kwargs[key], f)
+                if key != '__class__':
+                    setattr(self, key, value)
+
     def __str__(self):
         """str representation"""
-        return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id,
-                                         self.__dict__)
+        return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+
     def save(self):
-        """updates the public ins attr upd_at with the curren one"""
+        """updates last update time
+        """
         self.updated_at = datetime.now()
-        models.storage.save()
+        #storage.save()
 
     def to_dict(self):
-        """ returns a dic containing keys and values of the instance"""
-        n_dict = self.__dict__.copy()
-        if "created_at" in n_dict:
-            n_dict["created_at"] = n_dict["created_at"].strftime(dtm)
-        if "updated_at" in n_dict:
-            n_dict["updated_at"] = n_dict["updated_at"].strftime(dtm)
-        n_dict["__class__"] = self.__class__.__name__
-        return n_dict
+        """creates a new dictionary, adding a key and returning
+        datemtimes converted to strings
+        """
+        new_dict = {}
+
+        for key, values in self.__dict__.items():
+            if key == "created_at" or key == "updated_at":
+                new_dict[key] = values.strftime("%Y-%m-%dT%H:%M:%S.%f")
+            else:
+                if not values:
+                    pass
+                else:
+                    new_dict[key] = values
+        new_dict['__class__'] = self.__class__.__name__
+
+        return new_dict
