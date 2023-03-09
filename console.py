@@ -3,6 +3,9 @@ import cmd
 import sys
 import os
 import shlex
+from models.base_model import BaseModel
+
+classes = {'BaseModel': BaseModel}
 
 class HBNBCommand(cmd.Cmd):
     """HBNB Class """
@@ -20,8 +23,13 @@ class HBNBCommand(cmd.Cmd):
     def do_ENTER(self):
         """ Prints help command description """
         pass
-
-    
+    def do_create(self, argument):
+        """Creates an instance of BaseModel"""
+        if argument in classes:
+            print("mule i am creating")
+        else:
+            print("where is the arg")
+        return
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
