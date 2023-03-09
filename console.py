@@ -85,5 +85,32 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
         else:
             print("** class name missing **")
+
+    def do_all(self, argument):
+        """Deletes an instance based on the class name and id"""
+        if argument:
+            dic = models.storage.all()
+            x = argument.split()
+            my_list = []
+            if x[0] in self.classes:
+                for key in dic:
+                    y = str(dic[key])
+                    #my_list.append(x)
+                    class_type = key.split('.')
+                    if x[0] in class_type[0]:
+                        my_list.append(y)
+
+                print(my_list)
+            else:
+                print("** class doesn't exist **")
+        else:
+            dic = models.storage.all()
+            my_list = []
+            for key in dic:
+                x = str(dic[key])
+                my_list.append(x)
+            print(my_list)
+            
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
