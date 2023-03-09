@@ -100,5 +100,11 @@
         "created_at": "2023-03-09T13:48:38.905714",
         "updated_at": "2023-03-09T13:48:38.905731",
         "__class__": "BaseModel"
+    },
+    "BaseModel.600eceb9-98b8-418c-aa06-f08ac0104c04": {
+        "id": "600eceb9-98b8-418c-aa06-f08ac0104c04",
+        "created_at": "2023-03-09T14:15:36.421611",
+        "updated_at": "2023-03-09T14:15:36.421651",
+        "__class__": "BaseModel"
     }
 }

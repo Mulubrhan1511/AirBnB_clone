@@ -51,13 +51,34 @@ class HBNBCommand(cmd.Cmd):
                 if len(x) >= 2:
                     dic = models.storage.all()
                     # Key has format <className>.id
-                    keyU = x[0] + '.' + x[1]
-                    if keyU in dic:
-                        print(dic[keyU])
+                    key = x[0] + '.' + x[1]
+                    if key in dic:
+                        print(dic[key])
                         return
                     else:
                         print("** no instance found **")
                         return
+                else:
+                    print("** instance id missing **")
+            else:
+                print("** class doesn't exist **")
+        else:
+            print("** class name missing **")
+    def do_destroy(self, argument):
+        """Deletes an instance based on the class name and id"""
+        if argument:
+            x = argument.split()
+            if x[0] in self.classes:
+                if len(x) >= 2:
+                    dic = models.storage.all()
+                    # Key has format <className>.id
+                    key = x[0] + '.' + x[1]
+                    if key in dic:
+                        del dic[key]
+                        models.storage.save()
+                        return
+                    else:
+                        print("** no instance found **")         
                 else:
                     print("** instance id missing **")
             else:
