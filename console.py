@@ -45,7 +45,11 @@ class HBNBCommand(cmd.Cmd):
         """Prints the string representation of an instance based on the class name and id"""
         if argument:
             #if there is argument
-            pass
+            x = argument.split()
+            if x[0] in self.classes:
+                print("showing...")
+            else:
+                print("** class doesn't exist **")
         else:
             print("** class name missing **")
 if __name__ == '__main__':
