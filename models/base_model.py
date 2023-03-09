@@ -1,55 +1,43 @@
-#!/usr/bin/pyhon3
-"""
-Parent class that will inherit
-"""
+#!/usr/bin/python3
+"""Model Base """
 import uuid
+import models
 from datetime import datetime
-#from models import storage
 
 
 class BaseModel:
-    """Defines all common attributes/methods
-    """
+    """class Base"""
     def __init__(self, *args, **kwargs):
-        """initializes all attributes
-        """
-        if not kwargs:
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = self.created_at
-            #storage.new(self)
-        else:
-            f = "%Y-%m-%dT%H:%M:%S.%f"
+        """ Constructor """
+        if kwargs:
             for key, value in kwargs.items():
-                if key == 'created_at' or key == 'updated_at':
-                    value = datetime.strptime(kwargs[key], f)
-                if key != '__class__':
+                if key == "created_at":
+                    value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
+                if key == "updated_at":
+                    value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
+                if key != "__class__":
                     setattr(self, key, value)
+        else:
+            self.id = str(uuid.uuid4())  # unique id
+            self.created_at = datetime.now()  # datetime when is created
+            self.updated_at = datetime.now()  # date when is updated
+            models.storage.new(self)
 
     def __str__(self):
-        """str representation"""
-        return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        """ print() __str__ method """
+        """" For pep8 validation"""
+        className = self.__class__.__name__
+        return "[{}] ({}) {}".format(className, self.id, self.__dict__)
 
     def save(self):
-        """updates last update time
-        """
+        """ updates with the current datetime """
         self.updated_at = datetime.now()
-        #storage.save()
+        models.storage.save()
 
     def to_dict(self):
-        """creates a new dictionary, adding a key and returning
-        datemtimes converted to strings
-        """
-        new_dict = {}
-
-        for key, values in self.__dict__.items():
-            if key == "created_at" or key == "updated_at":
-                new_dict[key] = values.strftime("%Y-%m-%dT%H:%M:%S.%f")
-            else:
-                if not values:
-                    pass
-                else:
-                    new_dict[key] = values
-        new_dict['__class__'] = self.__class__.__name__
-
-        return new_dict
+        '''returns a dictionary with all keys/value of the instance'''
+        dict_copy = self.__dict__.copy()
+        dict_copy["created_at"] = self.created_at.isoformat()
+        dict_copy["updated_at"] = self.updated_at.isoformat()
+        dict_copy['__class__'] = self.__class__.__name__
+        return dict_copy
