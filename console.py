@@ -47,7 +47,19 @@ class HBNBCommand(cmd.Cmd):
             #if there is argument
             x = argument.split()
             if x[0] in self.classes:
-                print("showing...")
+                get_class = getattr(sys.modules[__name__], x[0])
+                if len(x) >= 2:
+                    dic = models.storage.all()
+                    # Key has format <className>.id
+                    keyU = x[0] + '.' + x[1]
+                    if keyU in dic:
+                        print(dic[keyU])
+                        return
+                    else:
+                        print("** no instance found **")
+                        return
+                else:
+                    print("** instance id missing **")
             else:
                 print("** class doesn't exist **")
         else:
