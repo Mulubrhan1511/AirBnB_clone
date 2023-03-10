@@ -110,6 +110,36 @@ class HBNBCommand(cmd.Cmd):
                 x = str(dic[key])
                 my_list.append(x)
             print(my_list)
+    
+    def do_update(self, argument):
+        """Updates an instance based on the class name and id """
+        if argument:
+            x = argument.split()
+            if x[0] in self.classes:
+                if len(x) >= 2:
+                    dic = models.storage.all()
+                    key = x[0] + '.' + x[1]
+                    if key in dic:
+                        if len(x) >= 3:
+                            key = x[0] + '.' + x[1] + '.' + x[2]
+                            if len(x) >= 4:
+                                print(type(key))
+                                print(type(x[2]))
+                                print(type(x[3]))
+                                dic[key] = x[3]
+                                print(dic[key])
+                            else:
+                                print("** value missing **")
+                        else:
+                            print("** attribute name missing **")
+                    else:
+                        print("** no instance found **")
+                else:
+                    print("** instance id missing **")
+            else:
+                print("** class doesn't exist **")
+        else:
+            print("** class name missing **")
             
 
 if __name__ == '__main__':
