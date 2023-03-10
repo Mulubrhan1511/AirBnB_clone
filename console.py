@@ -5,14 +5,21 @@ import os
 import shlex
 import models
 from models.base_model import BaseModel
-
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 
 
 
 class HBNBCommand(cmd.Cmd):
     """HBNB Class """
     prompt = '(hbnb) '
-    classes = {'BaseModel': BaseModel, 'BaseModel': BaseModel}
+    classes = {'BaseModel': BaseModel, 'Amenity': Amenity,
+               'State': State, 'Place': Place, 'Review': Review,
+               'User': User, 'City': City}
     def do_quit(self, argument):
         """ Defines quit option"""
         return True
@@ -114,20 +121,20 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, argument):
         """Updates an instance based on the class name and id """
         if argument:
-            x = argument.split()
+            x = shlex.split(argument)
             if x[0] in self.classes:
                 if len(x) >= 2:
                     dic = models.storage.all()
                     key = x[0] + '.' + x[1]
                     if key in dic:
                         if len(x) >= 3:
-                            key = x[0] + '.' + x[1] + '.' + x[2]
+                            m = dic[key]
+                            key2 = x[0] + '.' + x[1] + '.' + x[2]
                             if len(x) >= 4:
-                                print(type(key))
-                                print(type(x[2]))
-                                print(type(x[3]))
-                                dic[key] = x[3]
-                                print(dic[key])
+                                typeA = type(getattr(dic[key], x[2]))
+                                x[3] = typeA(x[3])
+                                setattr(m, x[2], x[3])
+                                models.storage.save()
                             else:
                                 print("** value missing **")
                         else:
