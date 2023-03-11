@@ -1,1 +1,1 @@
-my read me file
+This is alx group project on AirBnB clone.
