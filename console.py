@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Class CommandConsole for Airbnb
+Class Command Console for Airbnb
 """
 import cmd
 from datetime import datetime
