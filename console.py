@@ -1,23 +1,27 @@
 #!/usr/bin/python3
-"""Module for the entry point of the command interpreter."""
-
 import cmd
+import sys
+import os
+import shlex
+import models
 from models.base_model import BaseModel
-from models import storage
-import re
-import json
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
+classes = {'BaseModel': BaseModel, 'Amenity': Amenity,
+               'State': State, 'Place': Place, 'Review': Review,
+               'User': User, 'City': City}
 
 
 class HBNBCommand(cmd.Cmd):
-
-    """Class for the command interpreter."""
-
-    prompt = "(hbnb) "
-
-    def default(self, line):
-        """Catch commands if nothing else matches then."""
-        # print("DEF:::", line)
-        self._precmd(line)
+    """HBNB Class """
+    prompt = '(hbnb) '
+    classes = {'BaseModel': BaseModel, 'Amenity': Amenity,
+               'State': State, 'Place': Place, 'Review': Review,
+               'User': User, 'City': City}
     def do_quit(self, argument):
         """ Defines quit option"""
         return True
