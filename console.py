@@ -11,17 +11,12 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-classes = {'BaseModel': BaseModel, 'Amenity': Amenity,
-               'State': State, 'Place': Place, 'Review': Review,
-               'User': User, 'City': City}
+
 
 
 class HBNBCommand(cmd.Cmd):
     """HBNB Class """
     prompt = '(hbnb) '
-    classes = {'BaseModel': BaseModel, 'Amenity': Amenity,
-               'State': State, 'Place': Place, 'Review': Review,
-               'User': User, 'City': City}
     def do_quit(self, argument):
         """ Defines quit option"""
         return True
