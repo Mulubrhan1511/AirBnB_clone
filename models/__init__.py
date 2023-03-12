@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-do something
+do something.
 """
 from models.engine import file_storage
 from models.base_model import BaseModel
