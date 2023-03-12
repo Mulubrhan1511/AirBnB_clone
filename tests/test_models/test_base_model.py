@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Test BaseModel- Comproving expectect outputs and documentation"""
+"""Test BaseModel- Comproving expectect outputs and documentation."""
 from datetime import datetime
 import time
 import unittest
