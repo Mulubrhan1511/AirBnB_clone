@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Class city that inherits from base model"""
+""" Class city that inherits from base model."""
 
 from models.base_model import BaseModel
 
