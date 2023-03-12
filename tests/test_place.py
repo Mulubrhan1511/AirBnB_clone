@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Test User Class - Comproving expectect outputs and documentation
+"""Test User Class - Comproving expectect outputs and documentation.
 """
 
 from datetime import datetime
